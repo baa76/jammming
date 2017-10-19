@@ -1,5 +1,5 @@
 const clientId = '3006aa97c0fe403ca201483bc5ba0295';
-const redirectUri = 'http://baa_jam.surge.sh';
+const redirectUri = 'http://localhost:3000/';
 let accessToken;
 const Spotify = {
   getAccessToken () {
@@ -48,8 +48,10 @@ const Spotify = {
       })
     },
       savePlaylist(playlistName, trackURIs) {
-        if(!playlistName || !trackURIs) return;
-        let access_token = accessToken;
+        if(!playlistName || !trackURIs.length) {
+          return;
+        }
+        let access_token = Spotify.getAccessToken();
         let headers = { Authorization: `Bearer ${access_token}` };
         let userId = '';
         return fetch('https://api.spotify.com/v1/me', { headers: headers })
